@@ -16,6 +16,12 @@ class Load:
         self._c_rand_func.argtypes = [ctypes.c_int, ctypes.c_int]
         self._c_rand_func.restypes = ctypes.c_int
 
+        self._overclocking()
+
+    def _overclocking(self, count:int=1000) -> None:
+        for _ in range(count):
+            self._random_dll.random(-100, 100)
+
     def rand(self, from_:int=0, before:int=10) -> int:
         return self._c_rand_func(from_, before)
 
