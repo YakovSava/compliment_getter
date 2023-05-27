@@ -17,9 +17,7 @@ class Load:
         self._c_rand_func.restypes = ctypes.c_int
 
     def rand(self, from_:int=0, before:int=10) -> int:
-        a = self._c_rand_func(from_, before)
-        print(type(a))
-        return a
+        return self._c_rand_func(from_, before)
 
     def choice(self, array:list=[]):
         assert len(array) != 0, 'Empty list!'

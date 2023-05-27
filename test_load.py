@@ -8,4 +8,5 @@ def get_compliment() -> str:
         compliemnts = loads(file.read())['compliments']
     return load.choice(compliemnts)
 
-print(load._random_dll.srandom())
+for _ in range(5):
+    print(get_compliment())

@@ -4,16 +4,8 @@
 	extern "C" {
 # endif
 
-__declspec(dllexport) int random(int from, int before) {
-	int randomInt = rand() % before;
-	while (randomInt < from) {
-		randomInt = rand() % before;
-	}
-	return randomInt;
-}
-
-__declspec(dllexport) int srandom() {
-	return rand();
+__declspec(dllexport) int random(int range_min, int range_max) {
+    return ((double)rand() / RAND_MAX) * (range_max - range_min) + range_min;
 }
 
 # ifdef __cplusplus
