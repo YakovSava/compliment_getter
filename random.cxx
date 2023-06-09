@@ -1,13 +1,32 @@
 # include <stdlib.h>
+# include <Python.h>
 
-# ifdef __cplusplus
-	extern "C" {
-# endif
+static PyObject* random(PyObject* self, PyObject* args) {
+    int range_max, range_min;
 
-__declspec(dllexport) int random(int range_min, int range_max) {
-    return ((double)rand() / RAND_MAX) * (range_max - range_min) + range_min;
+    if (!PyArg_ParseTuple(args, "ii", &range_min, &range_max)) {
+        return NULL;
+    }
+
+    int result = ((double)rand() / RAND_MAX) * (range_max - range_min) + range_min;
+
+    return Py_BuildValue("i", result);
 }
 
-# ifdef __cplusplus
-	}
-# endif
+
+static PyMethodDef methods[] = {
+    {"random", random, METH_VARARGS, "C/C++ random"},
+    {NULL, NULL, 0, NULL} 
+};
+
+static struct PyModuleDef module = {
+    PyModuleDef_HEAD_INIT,
+    "rand",
+    "C/C++ random",
+    -1,
+    methods
+};
+
+PyMODINIT_FUNC PyInit_rand(void) {
+    return PyModule_Create(&module);
+}
