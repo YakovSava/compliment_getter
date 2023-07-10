@@ -1,16 +1,10 @@
-import ctypes
-
-from rand import random
+from rand import random, _overclocking
 
 class Load:
 
     def __init__(self):
         self._random = random
-        self._overclocking()
-
-    def _overclocking(self, count:int=1000) -> None:
-        for _ in range(count):
-            self.random(-100, 100)
+        _overclocking()
 
     def rand(self, from_:int=0, before:int=10) -> int:
         return self.random(from_, before)

@@ -13,9 +13,17 @@ static PyObject* random(PyObject* self, PyObject* args) {
     return Py_BuildValue("i", result);
 }
 
+static PyObject* _overclocking(PyObject* self, PyObject* args) {
+
+    srand(time(NULL));
+
+    return Py_None;
+}
+
 
 static PyMethodDef methods[] = {
     {"random", random, METH_VARARGS, "C/C++ random"},
+    {"_overclocking", _overclocking, METH_VARARGS, "Overclocking"}
     {NULL, NULL, 0, NULL} 
 };
 
