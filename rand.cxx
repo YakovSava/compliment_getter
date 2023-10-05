@@ -1,29 +1,33 @@
-# include <stdlib.h>
 # include <Python.h>
+# include <random>
+using namespace std;
 
-static PyObject* random(PyObject* self, PyObject* args) {
-    int range_max, range_min;
+class Rander {
+public:
+    Rander() {
+        random_device rd;
 
-    if (!PyArg_ParseTuple(args, "ii", &range_min, &range_max)) {
-        return NULL;
+        this->gen(rd());
     }
 
-    int result = ((double)rand() / RAND_MAX) * (range_max - range_min) + range_min;
-
-    return Py_BuildValue("i", result);
+    int rand(int range_min, int range_max) {
+        uniform_int_distibution<> dis(range_min, range_max);
+    
+        return dis(this->gen);
+    }
+private:
+    mt19937 gen;
 }
 
-static PyObject* _overclocking(PyObject* self, PyObject* args) {
 
-    srand(time(NULL));
-
-    return Py_None;
-}
+typedef struct {
+    PyObject_HEAD,
+    Rander* obj;
+} RanderObj;
 
 
 static PyMethodDef methods[] = {
     {"random", random, METH_VARARGS, "C/C++ random"},
-    {"_overclocking", _overclocking, METH_VARARGS, "Overclocking"}
     {NULL, NULL, 0, NULL} 
 };
 
